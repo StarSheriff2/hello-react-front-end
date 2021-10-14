@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import greetingAPI from '../../greetingAPI';
 
@@ -10,8 +11,7 @@ const initialState = {
 export const fetchGreeting = createAsyncThunk(
   'greeting/fetchRandomGreeting',
   async () => {
-    const response = await greetingAPI.get();
-    console.log('response from API: ', response);
+    const response = await greetingAPI.get('/api/v1/random-greeting');
     return response.data;
   },
 );
@@ -27,7 +27,7 @@ export const greetingSlice = createSlice({
       })
       .addCase(fetchGreeting.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.message = action.payload;
+        state.message = action.payload.message;
       })
       .addCase(fetchGreeting.rejected, (state) => {
         state.status = 'rejected';
@@ -36,6 +36,6 @@ export const greetingSlice = createSlice({
   },
 });
 
-export const selectRandomGreeting = (state) => state.message;
+export const selectRandomGreeting = (state) => state.greeting.message;
 
 export default greetingSlice.reducer;

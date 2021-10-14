@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import greetingReducer from '../features/greeting/greetingSlice';
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    greeting: greetingReducer,
   },
 });
 

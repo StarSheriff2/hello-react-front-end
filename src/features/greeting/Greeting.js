@@ -6,19 +6,16 @@ import styles from './Greeting.module.scss';
 const Greeting = () => {
   const dispatch = useDispatch();
 
-  const greeting = useSelector(selectRandomGreeting);
-
   useEffect(() => {
     dispatch(fetchGreeting());
   }, []);
 
+  const greeting = useSelector(selectRandomGreeting);
+
   return (
     <>
-      <h1>
-        Greeting:
-        {' '}
-        {greeting}
-      </h1>
+      <h1 className={`${styles.heading}`}>My First Full-Stack App with Rails and React 😸</h1>
+      <p className={`${styles.greeting}`}>{greeting}</p>
     </>
   );
 };
