@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-const Registration = () => {
+const Login = (props) => {
+  const { handleSuccessfulAuth, handleSuccessfulDoctorAuth } = props;
   const initialState = {
     email: '',
-    registrationErrors: '',
+    loginErrors: '',
   };
 
   const [user, setUser] = useState(initialState);
 
-  // this.handleSubmit = this.handleSubmit.bind(this);
-  // this.handleChange = this.handleChange.bind(this);
-
   const handleSubmit = (event) => {
-    const {
-      email,
-    } = user;
-
+    const { email } = user;
     axios
       .post(
-        'http://localhost:3001/api/v1/users',
+        'http://localhost:3001/api/v1/sign_in',
         {
           user: {
             email,
@@ -29,12 +23,14 @@ const Registration = () => {
         { withCredentials: true },
       )
       .then((response) => {
-        if (response.data.status === 'created') {
-          console.log('Registration data', response.data);
+        if (response.data.logged_in && response.data.patient) {
+          handleSuccessfulAuth(response.data);
+        } else {
+          handleSuccessfulDoctorAuth(response.data);
         }
       })
       .catch((error) => {
-        console.log('registration error', error);
+        console.log('login error', error);
       });
 
     event.preventDefault();
@@ -58,16 +54,11 @@ const Registration = () => {
         </div>
 
         <button type="submit" className="btn btn-primary btn-sm">
-          Register
+          Login
         </button>
-        <p>
-          Have an account?
-          {' '}
-          <Link to="/">Login</Link>
-        </p>
       </form>
     </div>
   );
 };
 
-export default Registration;
+export default Login;
