@@ -10,9 +10,6 @@ const Registration = () => {
 
   const [user, setUser] = useState(initialState);
 
-  // this.handleSubmit = this.handleSubmit.bind(this);
-  // this.handleChange = this.handleChange.bind(this);
-
   const handleSubmit = (event) => {
     const {
       email,
